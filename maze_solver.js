@@ -8,38 +8,38 @@ var MazeSolver = function(maze) {
             deferred.resolve();
         } else {
             setTimeout(function(){
-                if (maze.explore('left') !== 9 && maze.left()) {
+                if (maze.explore('left') !== 9 && maze.move('left')) {
                     findExitAsync()
                     .then(function(){
                         directions = ['left'].concat(directions);
                         return deferred.resolve();
                     })
                     .fail(function(){
-                        maze.right();
+                        maze.move('right');
                         findExitAsync().then(deferred.resolve).fail(deferred.reject);
                     });
-                } else if (maze.explore('up') !== 9 && maze.up()) {
+                } else if (maze.explore('up') !== 9 && maze.move('up')) {
                     findExitAsync().then(function(){
                         directions = ['up'].concat(directions);
                         return deferred.resolve();
                     }).fail(function(){
-                        maze.down();
+                        maze.move('down');
                         findExitAsync().then(deferred.resolve).fail(deferred.reject);
                     });
-                } else if (maze.explore('right') !== 9 && maze.right()) {
+                } else if (maze.explore('right') !== 9 && maze.move('right')) {
                     findExitAsync().then(function(){
                         directions = ['right'].concat(directions);
                         return deferred.resolve();
                     }).fail(function(){
-                        maze.left();
+                        maze.move('left');
                         findExitAsync().then(deferred.resolve).fail(deferred.reject);
                     });
-                } else if (maze.explore('down') !== 9 && maze.down()) {
+                } else if (maze.explore('down') !== 9 && maze.move('down')) {
                     findExitAsync().then(function(){
                         directions = ['down'].concat(directions);
                         return deferred.resolve();
                     }).fail(function(){
-                        maze.up();
+                        maze.move('up');
                         deferred.reject();
                     });
                 } else {
@@ -54,39 +54,39 @@ var MazeSolver = function(maze) {
         if (maze.isExit() === true) {
             return true;
         }
-        if (maze.explore('left') !== 9 && maze.left()) {
+        if (maze.explore('left') !== 9 && maze.move('left')) {
             if (findExit()) {
                 directions = ['left'].concat(directions);
                 return true;
             } else {
-                maze.right();
+                maze.move('right');
             }
         }
 
-        if (maze.explore('up') !== 9 && maze.up()) {
+        if (maze.explore('up') !== 9 && maze.move('up')) {
             if (findExit()) {
                 directions = ['up'].concat(directions);
                 return true;
             } else {
-                maze.down();
+                maze.move('down');
             }
         }
 
-        if (maze.explore('right') !== 9 && maze.right()) {
+        if (maze.explore('right') !== 9 && maze.move('right')) {
             if (findExit()) {
                 directions = ['right'].concat(directions);
                 return true;
             } else {
-                maze.left();
+                maze.move('left');
             }
         }
 
-        if (maze.explore('down') !== 9 && maze.down()) {
+        if (maze.explore('down') !== 9 && maze.move('down')) {
             if (findExit()) {
                 directions = ['down'].concat(directions);
                 return true;
             } else {
-                maze.up();
+                maze.move('up');
             }
         }
         return false;

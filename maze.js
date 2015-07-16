@@ -7,12 +7,12 @@ var Maze = function(mazeContainer) {
         // 2 = start
         // 3 = target / exit
         // 9 = passage, visited
-        [0,0,0,0,0,0,0,3,0,0,0,0,0,0,0],
-        [1,1,1,1,1,0,0,1,1,1,1,0,0,0,0],
-        [0,1,0,1,0,0,0,1,0,0,1,0,0,0,0],
-        [0,1,1,1,1,1,1,0,0,0,1,1,1,1,0],
-        [0,1,0,0,0,0,1,0,0,0,1,0,0,1,0],
-        [0,1,0,0,0,1,1,0,0,0,0,0,0,1,1],
+        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+        [1,1,1,1,1,0,0,1,0,0,1,0,0,0,0],
+        [0,1,0,1,0,0,0,1,1,1,1,0,0,0,0],
+        [0,1,1,1,1,1,1,0,1,0,1,1,1,1,0],
+        [0,1,0,0,0,0,1,0,1,1,1,0,0,1,0],
+        [0,1,0,0,0,1,1,0,0,1,0,0,0,1,3],
         [1,1,1,0,0,1,0,0,0,1,0,0,0,1,0],
         [1,0,1,1,0,0,0,1,1,1,1,1,1,1,0],
         [1,0,0,1,1,1,1,1,0,0,0,0,0,0,0],
@@ -54,7 +54,7 @@ var Maze = function(mazeContainer) {
             'position': 'relative',
             'width': (blockWidth * maze[0].length) + 'px',
             'height': (blockWidth * maze.length) + 'px',
-            'border': '1px solid black',
+            'border': '5px solid grey',
             'background-color': '#333'
         });
         move(actPos);
@@ -126,21 +126,32 @@ var Maze = function(mazeContainer) {
         }
     };
 
-    this.up = function() {
+    var up = function() {
         return move([actPos[0]-1,actPos[1]]);
     };
-    this.down = function() {
+    var down = function() {
         return move([actPos[0]+1,actPos[1]]);
     };
-    this.left = function() {
+    var left = function() {
         return move([actPos[0],actPos[1]-1]);
     };
-    this.right = function() {
+    var right = function() {
         return move([actPos[0],actPos[1]+1]);
     };
+
+    this.move = function(dir) {
+        switch(dir) {
+            case 'up': return up();
+            case 'down': return down();
+            case 'left': return left();
+            case 'right': return right();
+        }
+    };
+
     this.isExit = function() {
         return originalMaze[actPos[0]][actPos[1]] === 3;
     };
+
     this.explore = function(dir) {
         var pos = [actPos[0],actPos[1]];
         switch(dir) {
