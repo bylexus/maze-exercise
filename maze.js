@@ -1,7 +1,9 @@
+// for maze generation, see e.g.:
+// http://rosettacode.org/wiki/Maze_generation
 var Maze = function(mazeContainer) {
     mazeContainer = $(mazeContainer);
 
-    var originalMaze = [
+    /*var originalMaze = [
         // 0 = wall
         // 1 = passage
         // 2 = start
@@ -17,11 +19,13 @@ var Maze = function(mazeContainer) {
         [1,0,1,1,0,0,0,1,1,1,1,1,1,1,0],
         [1,0,0,1,1,1,1,1,0,0,0,0,0,0,0],
         [0,0,0,0,2,0,0,0,0,0,0,0,0,0,0]
-    ], maze = null;
+    ]*/
+    var originalMaze = amaze({rows: 5,cols:10});
+    var maze = null;
 
 
     var actPos = [0,0],
-        blockWidth = 50;
+        blockWidth = 40;
 
     var cloneMaze = function(mazeArr) {
         var x = 0, y = 0;
@@ -39,16 +43,19 @@ var Maze = function(mazeContainer) {
 
     var init = function() {
         var x = 0, y = 0;
-        maze = cloneMaze(originalMaze);
 
         // find player's start position
-        for (y = 0; y < maze.length; y++) {
-            for (x = 0; x < maze[y].length; x++) {
-                if (maze[y][x] === 2) {
-                    actPos = [y,x];
-                }
+        for (x = 0; x < originalMaze[y].length; x++) {
+            if (originalMaze[0][x] === 1 || originalMaze[0][x] === 2) {
+                originalMaze[0][x] = 2;
+                actPos = [0,x];
+            }
+            if (originalMaze[originalMaze.length-1][x] === 1) {
+                originalMaze[originalMaze.length-1][x] = 3;
             }
         }
+
+        maze = cloneMaze(originalMaze);
 
         mazeContainer.css({
             'position': 'relative',
