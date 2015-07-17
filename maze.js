@@ -20,7 +20,7 @@ var Maze = function(mazeContainer) {
         [1,0,0,1,1,1,1,1,0,0,0,0,0,0,0],
         [0,0,0,0,2,0,0,0,0,0,0,0,0,0,0]
     ]*/
-    var originalMaze = amaze({rows: 5,cols:10});
+    var originalMaze = amaze(10,10);
     var maze = null;
 
 
