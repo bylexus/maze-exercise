@@ -1,5 +1,5 @@
 $(document).ready(function(){
-    var maze = new Maze($('#maze2'));
+    var maze = new Maze($('#mazecontainer'));
     var solver = new MazeSolver(maze);
     window.maze = maze;
     window.solver = solver;
