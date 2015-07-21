@@ -3,29 +3,14 @@
 var Maze = function(mazeContainer) {
     mazeContainer = $(mazeContainer);
 
-    /*var originalMaze = [
-        // 0 = wall
-        // 1 = passage
-        // 2 = start
-        // 3 = target / exit
-        // 9 = passage, visited
-        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-        [1,1,1,1,1,0,0,1,0,0,1,0,0,0,0],
-        [0,1,0,1,0,0,0,1,1,1,1,0,0,0,0],
-        [0,1,1,1,1,1,1,0,1,0,1,1,1,1,0],
-        [0,1,0,0,0,0,1,0,1,1,1,0,0,1,0],
-        [0,1,0,0,0,1,1,0,0,1,0,0,0,1,3],
-        [1,1,1,0,0,1,0,0,0,1,0,0,0,1,0],
-        [1,0,1,1,0,0,0,1,1,1,1,1,1,1,0],
-        [1,0,0,1,1,1,1,1,0,0,0,0,0,0,0],
-        [0,0,0,0,2,0,0,0,0,0,0,0,0,0,0]
-    ]*/
     var originalMaze = amaze(10,10);
-    var maze = null;
+    var maze = null,
+        canvas = null,
+        borderWidth = 10;
 
 
     var actPos = [0,0],
-        blockWidth = 40;
+        blockWidth = 20;
 
     var cloneMaze = function(mazeArr) {
         var x = 0, y = 0;
@@ -41,7 +26,7 @@ var Maze = function(mazeContainer) {
         return newMaze;
     };
 
-    var init = function() {
+    initMazeData = function() {
         var x = 0, y = 0;
 
         // find player's start position
@@ -56,18 +41,18 @@ var Maze = function(mazeContainer) {
         }
 
         maze = cloneMaze(originalMaze);
+    }.bind(this);
 
-        mazeContainer.css({
-            'position': 'relative',
-            'width': (blockWidth * maze[0].length) + 'px',
-            'height': (blockWidth * maze.length) + 'px',
-            'border': '5px solid grey',
-            'background-color': '#333'
-        });
+    var init = function() {
+        initMazeData();
+        canvas = $('<canvas></canvas>').attr({
+            width: blockWidth * maze[0].length + 2*borderWidth,
+            height: (blockWidth * maze.length + 2*borderWidth)})[0];
+
+        mazeContainer.html(canvas);
         move(actPos);
-        drawMaze();
 
-    };
+    }.bind(this);
 
     var getColorForBlockNr = function(nr) {
         switch (nr) {
@@ -81,32 +66,52 @@ var Maze = function(mazeContainer) {
 
     var drawMaze = function() {
         var el,
-            x = 0, y = 0;
-        mazeContainer.html('');
+            x = 0, y = 0,
+            ctx = canvas.getContext("2d");
+
+        ctx.setTransform(1, 0, 0, 1, 0, 0); // reset any transformation
+        ctx.fillStyle = '#888';
+        ctx.fillRect(0,0,canvas.width,canvas.height);
+
+        ctx.fillStyle = '#888';
+        ctx.fillRect(borderWidth,borderWidth,canvas.width-2*borderWidth,canvas.height-2*borderWidth);
+
+        ctx.translate(borderWidth,borderWidth);
+
         for (y = 0; y < maze.length; y++) {
             for (x = 0; x < maze[y].length; x++) {
-                el = $('<div></div>')
-                .css({
-                    'position': 'absolute',
-                    'width': blockWidth + 'px',
-                    'height': blockWidth + 'px',
-                    'left': (blockWidth * x) + 'px',
-                    'top': (blockWidth * y) + 'px',
-                    'background-color': getColorForBlockNr(maze[y][x])
-                });
-                mazeContainer.append(el);
+                ctx.fillStyle = getColorForBlockNr(maze[y][x]);
+                ctx.fillRect(
+                    blockWidth * x,
+                    blockWidth * y,
+                    blockWidth,
+                    blockWidth
+                );
             }
         }
         // player
-        mazeContainer.append($('<div></div>').css({
-            'position': 'absolute',
-            'width': blockWidth + 'px',
-            'height': blockWidth + 'px',
-            'left': (actPos[1] * blockWidth) + 'px',
-            'top': (actPos[0] * blockWidth) + 'px',
-            'background-color': '#f22',
-            'border-radius': blockWidth/2 + 'px'
-        }));
+        ctx.beginPath();
+        ctx.fillStyle = '#f22';
+        ctx.strokeStyle = '#333';
+        ctx.lineWidth = 2;
+        ctx.arc(
+            actPos[1] * blockWidth+(blockWidth/2.0),
+            actPos[0] * blockWidth+(blockWidth/2.0),
+            blockWidth/2.0*0.8,
+            0,
+            2*Math.PI
+        );
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.arc(
+            actPos[1] * blockWidth+(blockWidth/2.0),
+            actPos[0] * blockWidth+(blockWidth/2.0),
+            blockWidth/2.0*0.8,
+            0,
+            2*Math.PI
+        );
+        ctx.stroke();
     };
 
     var validPosition = function(pos) {
@@ -171,8 +176,11 @@ var Maze = function(mazeContainer) {
         return maze[pos[0]][pos[1]];
     };
 
-    this.reset = function(){
-        init();
+
+
+    this.reset = function() {
+        initMazeData();
+        move(actPos);
     };
 
     init();
