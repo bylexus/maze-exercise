@@ -44,11 +44,28 @@ npm install
 
 ### Maze class (maze.js)
 
-TBD
+#### Example
+
+```javascript
+// Initialization: container, width, height:
+var maze = new Maze(document.getElementById('mazeContainer'),20,20);
+
+console.log('Move down, if possible!',maze.move('down')); // true when the move could be done
+
+console.log('What lies left from me?',maze.explore('left')); // 0 = wall, 1 = passage, 2 = start, 3 = exit, 9 = passage, already visited
+
+console.log('did I reach the exit?',maze.isExit()); // true when player stands on exit right now
+
+```
 
 ### MazeSolver reference implementation (maze_solver.js)
 
-TBD
+The Reference Implementation uses a simple recursive strategy to find the exit: At each intersection,
+try the left, front, right, down direction recursively. If the recursive call returns false, step back
+and try the next direction, until the exit is found or until no further directions are available.
+
+The reference implementation also comes with an asynchronous implementation, which updates the UI on each
+step (`findExitAsync()`). This allows to watch the algorithm while it is working.
 
 
 Build

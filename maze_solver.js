@@ -45,7 +45,7 @@ var MazeSolver = function(maze) {
                 } else {
                     deferred.reject();
                 }
-            },50);
+            },20);
         }
         return deferred.promise();
     };
