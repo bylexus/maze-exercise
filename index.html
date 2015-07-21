@@ -1,47 +1,65 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <title>A maze exercise</title>
+    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+
+    <style type="text/css">
+    html, body {
+        font-family: 'Roboto', sans-serif;
+    }
+
+    footer {
+        margin-top: 1em;
+        border-top: 1px solid #333;
+    }
+    </style>
 </head>
 <body>
-    <h1>Maze Solver</h1>
-    <p><strong> Note for developers:</strong>You have 2 global objects available:</p>
-    <pre><code>
+    <h1>Maze Solver Exercise</h1>
+    <p>A Maze Generator / Solver experiment, see <a href="https://github.com/bylexus/maze-exercise">https://github.com/bylexus/maze-exercise</a> for details.</p>
+
+    <button type="button" id="startAsync">Start async search!</button>
+    <button type="button" id="startSync">Start sync search!</button>
+    <button type="button" id="reset">reset</button>
+    <div style="display: flex; flex-wrap: wrap">
+        <div id="mazecontainer" style="order: 1; margin-right: 0.5em"></div>
+        <div  style="order: 2">
+            <p><strong> Note for developers:</strong>You have 2 global objects available:</p>
+            <pre><code>
 - maze: represents a Maze object with the following functions:
-    - move(direction): Moves the player in the given dir ('up','down','right','left')
-    - explore(direction): Returns information about the NEXT cell in the given dir ('up','down','right','left'):
+    - move(direction): Moves the player in the given dir
+        ('up','down','right','left')
+    - explore(direction): Returns information about the NEXT cell
+        in the given dir ('up','down','right','left'):
         0: Wall
         1: Passage, not yet visited
         2: Entry
         3: Exit: You have to find that one
         9: Passage, already visited
-    - isExit(): Returns true if the player is on the exit cell at the moment
+    - isExit(): Returns true if the player is on the
+        exit cell at the moment
 
 
 - solver: The Maze Solver object, to be implemented by a smart guy :-)
-    </code></pre>
+            </code></pre>
+        </div>
 
-    <button type="button" id="startAsync">Start async search!</button>
-    <button type="button" id="startSync">Start sync search!</button>
-    <button type="button" id="reset">reset</button>
-    <div id="maze2"></div>
+    </div>
+
     <div id="output"></div>
 
 
     <!-- <script type="text/javascript" src="build/app.min.js"></script> -->
 
-    <!-- build:js app.min.js -->
-    <script type="text/javascript" src="node_modules/jquery/dist/jquery.min.js"></script>
-    <script type="text/javascript" src="amaze.js"></script>
-    <script type="text/javascript" src="maze.js"></script>
-    <script type="text/javascript" src="app.js"></script>
-    <!-- /build -->
-
-    <!-- build:remove:app -->
-    <script type="text/javascript" src="maze_solver.js"></script>
-    <!-- /build -->
+    <script src="app.min.js"></script>
 
     <!-- build:js:exercise maze_solver_exercise.js -->
     <!-- /build -->
+
+    <footer>
+    &copy; 2015 <a href="https://alexi.ch/">Alexander Schenkel</a> | Please, <a href="http://browsehappy.com/">use a modern browser</a> if you do not so. I didn't look, so decide for yourself.
+    </footer>
 
 </body>
 </html>
