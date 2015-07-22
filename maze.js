@@ -1,11 +1,13 @@
 // for maze generation, see e.g.:
 // http://rosettacode.org/wiki/Maze_generation
-var Maze = function(mazeContainer, mazeWidth, mazeHeight, blockWidth) {
+var Maze = function(mazeContainer, mazeWidth, mazeHeight, blockWidth, algorithm) {
     var originalMaze,
         maze = null,
         canvas = null,
         borderWidth = 10,
         actPos = [0,0],
+        Generator = (window[algorithm] instanceof Function?window[algorithm] : RecursiveBacktrackerGenerator),
+
         cloneMaze = function(mazeArr) {
             var x = 0, y = 0;
             var newMaze = [];
@@ -42,7 +44,9 @@ var Maze = function(mazeContainer, mazeWidth, mazeHeight, blockWidth) {
             mazeWidth = mazeWidth || 10;
             mazeHeight = mazeHeight || 10;
             blockWidth = blockWidth || 20,
-            originalMaze = amaze(mazeWidth, mazeHeight);
+            mazeGenerator = new Generator(mazeWidth,mazeHeight),
+            originalMaze = mazeGenerator.generate();
+
             initMazeData();
 
             canvas = $('<canvas></canvas>').attr({

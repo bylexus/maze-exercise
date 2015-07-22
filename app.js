@@ -3,7 +3,12 @@ $(document).ready(function(){
 
     var configureMaze = function() {
         $('#mazecontainer').html('');
-        maze = new Maze($('#mazecontainer'),$('#blocksX').val(),$('#blocksY').val(),$('#blockWidth').val());
+        maze = new Maze(
+            $('#mazecontainer'),
+            $('#blocksX').val(),
+            $('#blocksY').val(),
+            $('#blockWidth').val(),
+            $('#generator').val());
         solver = new MazeSolver(maze);
         window.maze = maze;
         window.solver = solver;

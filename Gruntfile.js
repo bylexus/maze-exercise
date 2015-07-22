@@ -8,12 +8,12 @@ module.exports = function(grunt) {
         uglify: {
             app: {
                 files: {
-                    'build/app.min.js': ['node_modules/jquery/dist/jquery.js', 'amaze.js', 'maze.js', 'maze_solver.js', 'app.js']
+                    'build/app.min.js': ['node_modules/jquery/dist/jquery.js', 'amaze.js', 'depth_first.js', 'maze.js', 'maze_solver.js', 'app.js']
                 }
             },
             exercise: {
                 files: {
-                    'exercise/app.min.js': ['node_modules/jquery/dist/jquery.js', 'amaze.js', 'maze.js', 'app.js']
+                    'exercise/app.min.js': ['node_modules/jquery/dist/jquery.js', 'amaze.js', 'depth_first.js', 'maze.js', 'app.js']
                 }
             }
         },
