@@ -1,8 +1,15 @@
 $(document).ready(function(){
-    var maze = new Maze($('#mazecontainer'));
-    var solver = new MazeSolver(maze);
-    window.maze = maze;
-    window.solver = solver;
+    var maze,solver;
+
+    var configureMaze = function() {
+        $('#mazecontainer').html('');
+        maze = new Maze($('#mazecontainer'),$('#blocksX').val(),$('#blocksY').val(),$('#blockWidth').val());
+        solver = new MazeSolver(maze);
+        window.maze = maze;
+        window.solver = solver;
+    };
+
+    configureMaze();
 
     $('#startAsync').on('click', function(){
         if (!solver.findExitAsync) return alert('Async method not implemented.');
@@ -34,6 +41,10 @@ $(document).ready(function(){
 
     $('#reset').on('click', function(){
         maze.reset();
+    });
+
+    $('#configureMaze').on('click', function(){
+        configureMaze();
     });
 
 });

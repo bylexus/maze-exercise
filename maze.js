@@ -1,12 +1,11 @@
 // for maze generation, see e.g.:
 // http://rosettacode.org/wiki/Maze_generation
-var Maze = function(mazeContainer, mazeWidth, mazeHeight) {
+var Maze = function(mazeContainer, mazeWidth, mazeHeight, blockWidth) {
     var originalMaze,
         maze = null,
         canvas = null,
         borderWidth = 10,
         actPos = [0,0],
-        blockWidth = 20,
         cloneMaze = function(mazeArr) {
             var x = 0, y = 0;
             var newMaze = [];
@@ -42,6 +41,7 @@ var Maze = function(mazeContainer, mazeWidth, mazeHeight) {
             mazeContainer = $(mazeContainer);
             mazeWidth = mazeWidth || 10;
             mazeHeight = mazeHeight || 10;
+            blockWidth = blockWidth || 20,
             originalMaze = amaze(mazeWidth, mazeHeight);
             initMazeData();
 
@@ -60,7 +60,7 @@ var Maze = function(mazeContainer, mazeWidth, mazeHeight) {
                 case 1: return 'rgba(127,127,127,0.3)';
                 case 2: return '#888';
                 case 3: return '#0f0';
-                case 9: return '#ccc';
+                case 9: return '#cfc';
             }
         }.bind(this),
 
