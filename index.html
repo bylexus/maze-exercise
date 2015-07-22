@@ -19,6 +19,23 @@
     <h1>Maze Solver Exercise</h1>
     <p>A Maze Generator / Solver experiment, see <a href="https://github.com/bylexus/maze-exercise">https://github.com/bylexus/maze-exercise</a> for details.</p>
 
+    <fieldset>
+        <legend>Configure maze</legend>
+        <div>
+            <label>Maze Blocks X: <input id="blocksX" type="number" min="2" max="100" value="10" /></label>
+            <label>Y: <input id="blocksY" type="number" min="2" max="100" value="10" /></label>
+            <label>Block size: <input id="blockWidth" type="number" min="2" max="100" value="20" /></label>
+            <label>Generator: 
+            <select id="generator">
+                <option value="RecursiveBacktrackerGenerator">Recursive Backtracking Depth First</option>
+                <option value="DepthFirstGenerator">Simple Depth First</option>
+            </select>
+            </label>
+            <button type="button" id="configureMaze">generate</button>
+        </div>
+
+    </fieldset>
+
     <button type="button" id="startAsync">Start async search!</button>
     <button type="button" id="startSync">Start sync search!</button>
     <button type="button" id="reset">reset</button>
