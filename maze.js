@@ -57,7 +57,7 @@ var Maze = function(mazeContainer, mazeWidth, mazeHeight) {
         getColorForBlockNr = function(nr) {
             switch (nr) {
                 case 0: return '#333';
-                case 1: return '#888';
+                case 1: return 'rgba(127,127,127,0.3)';
                 case 2: return '#888';
                 case 3: return '#0f0';
                 case 9: return '#ccc';
@@ -67,13 +67,22 @@ var Maze = function(mazeContainer, mazeWidth, mazeHeight) {
         drawMaze = function() {
             var el,
                 x = 0, y = 0,
-                ctx = canvas.getContext("2d");
+                ctx = canvas.getContext("2d"),
+                backGradient = ctx.createLinearGradient(0,0,0,canvas.height);
+                backGradientRev = ctx.createLinearGradient(0,0,0,canvas.height);
+
+            backGradient.addColorStop(0,'#fff');
+            backGradient.addColorStop(1,'#aaa');
+
+            backGradientRev.addColorStop(1,'#ccc');
+            backGradientRev.addColorStop(0,'#888');
 
             ctx.setTransform(1, 0, 0, 1, 0, 0); // reset any transformation
-            ctx.fillStyle = '#888';
+            ctx.fillStyle = backGradientRev;
             ctx.fillRect(0,0,canvas.width,canvas.height);
 
-            ctx.fillStyle = '#888';
+
+            ctx.fillStyle = backGradient;
             ctx.fillRect(borderWidth,borderWidth,canvas.width-2*borderWidth,canvas.height-2*borderWidth);
 
             ctx.translate(borderWidth,borderWidth);
